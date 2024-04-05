@@ -24,6 +24,8 @@ const AvailbleRentals = () => {
     const [loading, setLoading] = useState(false);
     const [overlay, setOverlay] = useState(false);
     const [inputfeedback, setInputfeedback] = useState(false);
+    const[sortBy,setSortBy]=useState(null);
+    const[maxDistance,setMaxDistance]=useState(null)
     const handleSubmitAplicationfeedback = () => {
         setInputfeedback((e) => !e)
     }
@@ -43,7 +45,7 @@ const AvailbleRentals = () => {
 
 
     return (
-        <div className=' w-full sm:w-full md:w-full lg:w-[80%] h-auto sm:ml-2 lg:ml-[21%] mt-[63px] '>
+        <div className=' w-full sm:w-full md:w-full lg:w-[80%] h-auto sm:ml-2 lg:ml-[20%] mt-[63px] '>
             {
                 loading ? (
                     <div className='w-full  h-screen sm:ml-2 lg:ml-[21%] mt-[63px] flex justify-center items-center'>
@@ -53,7 +55,27 @@ const AvailbleRentals = () => {
                 ) : (
 
                     <div className='flex flex-row items-start'>
-                        <div className='w-full sm:w-full md:w-full lg:w-[65%] h-auto sticky overflow-y-auto'>
+                        <div className='w-full sm:w-full md:w-full lg:w-[65%] h-auto sticky overflow-y-auto flex flex-col'>
+                            <div className='w-full my-4 flex flex-row justify-between p-3'>
+                                <div className='w-auto flex flex-row items-center'>
+                                    <h1 className='text-gray-500 mr-1'>enter maximum distance</h1>
+                                    <input 
+                                    type="text"  
+                                    className='w-[100px] h-[30px] mr-2 border-[2px] rounded-md outline-gray-600 focus:outline-none focus:border-green-500'
+                                    onChange={(e)=>setMaxDistance(e.target.value)}
+                                    />
+
+                                </div>
+                                <div className='w-auto flex flex-row items-center'>
+                                    <h1 className='text-gray-500 mr-2'>sorte by</h1>
+                                    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}
+                                        className='w-[110px]  h-[30px] border-[1px] border-b-gray-600 focus:outline-none focus:border-green-500'>
+                                        <option value="distance">distance</option>
+                                        <option value="latest added">latest added</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
                             <div className=' w-full h-auto p-4 flex flex-col border-[1px] border-b-gray-600 bg-customGray' >
                                 <div className='w-full h-[50px] flex flex-row'>
                                     <img

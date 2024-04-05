@@ -65,7 +65,7 @@ const Account = () => {
 
     const id = 215488;
     return (
-        <div className="w-full sm:w-full md:w-full lg:w-[80%] h-auto sm:ml-2 lg:ml-[21%] mt-[63px] flex flex-col">
+        <div className="w-full sm:w-full md:w-full lg:w-[80%] h-auto sm:ml-2 lg:ml-[20%] mt-[63px] flex flex-col">
             <div className="w-full h-auto flex  flex-col justify-center    lg:flex-row   lg:justify-start  bg-customGray p-3 lg:items-center">
                 <img
                     src={profileImage}

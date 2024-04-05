@@ -51,7 +51,7 @@ const Requests = () => {
 
 
     return (
-        <div className='w-full sm:w-full md:w-full lg:w-[80%] h-auto sm:ml-2 lg:ml-[21%] mt-[63px] flex flex-col'>
+        <div className='w-full sm:w-full md:w-full lg:w-[80%] h-auto sm:ml-2 lg:ml-[20%] mt-[63px] flex flex-col px-2'>
             {
                 loading ? (
                     <div className='w-screen  h-screen  flex justify-center items-center  fixed'>
@@ -62,9 +62,9 @@ const Requests = () => {
                     <div className='w-full h-auto felx flex-col'>
                         <h1 className='text-[40px] my-5 font-bold  text-gray-500'> Your requests :</h1>
                         <div className='w-full flex flex-col lg:flex-row'>
-                            <div className='w-full h-[350px] bg-orange-50 border-[2px] border-orange-600 lg:w-[33%] rounded-md mb-3 mx-2 overflow-y-auto flex flex-col items-center'>
+                            <div className='w-full h-[500px] bg-orange-50 border-[2px] border-orange-600 lg:w-[33%] rounded-md mb-3 mx-2 overflow-y-auto flex flex-col items-center'>
                                 <h1 className='text-[25px] font-bold text-orange-600 mt-3'>Pending Requests ...</h1>
-                                <div className='w-full h-auto bg-orange-100 border-[2px] border-orange-600 mx-4 mt-2 flex flex-col rounded-md'>
+                                <div className='w-[95%] h-auto bg-orange-100 border-[2px] border-orange-600 mx-2 mt-2 flex flex-col rounded-md'>
                                     <div className='w-full my-2 flex flex-row px-2 justify-between'>
                                         <h1 className='font-bold'>Content</h1>
                                         <div>
@@ -104,7 +104,9 @@ const Requests = () => {
                                     </div>
                                     <div className='w-full flex justify-end mr-5 my-3'>
 
-                                        <FontAwesomeIcon icon={faArrowRight} className=' cursor-pointer' title='see associated Rental post' />
+                                        <NavLink to="/student/requests/associatedRental">
+                                            <FontAwesomeIcon icon={faArrowRight} className=' cursor-pointer' title='see associated Rental post' />
+                                        </NavLink>
                                     </div>
 
                                 </div>
@@ -112,12 +114,41 @@ const Requests = () => {
 
 
                             </div>
-                            <div className='w-full h-[350px] bg-customGray lg:w-[33%] rounded-md mb-3 mx-2 overflow-y-auto flex flex-col justify-center'>
+                            <div className='w-full h-[500px] bg-blue-50 border-[2px] border-[#02D4DF] lg:w-[33%] rounded-md mb-3 mx-2 overflow-y-auto flex flex-col items-center'>
+                                <h1 className='text-[25px] font-bold text-[#02D4DF] mt-3'>Accepted Requests ...</h1>
+                                <div className='w-[95%] h-auto px-2 border-[2px] bg-blue-100 border-[#02D4DF]  rounded-md mt-2 flex flex-col '>
+                                    <div className='w-full h-auto py-2 flex flex-row justify-between'>
+                                        <h1 className='font-bold'>Content</h1>
+                                        <NavLink to="/student/requests/associatedRental">
+                                            <FontAwesomeIcon icon={faArrowRight} className=' cursor-pointer' title='see associated Rental post' />
+                                        </NavLink>
 
+                                    </div>
+                                    <div className='w-full p-3'>
+                                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti nostrum, culpa reprehenderit dolore doloremque labore cum laboriosam repellat aliquid ipsam explicabo velit eligendi officiis dolorum nisi impedit ab voluptatem ullam?</p>
+
+                                    </div>
+                                </div>
+                               
 
                             </div>
-                            <div className='w-full h-[350px] bg-customGray lg:w-[33%] rounded-md mb-3 mx-2 overflow-y-auto flex flex-col justify-center'>
+                            <div className='w-full h-[500px] bg-green-50 border-[2px] border-submiButton lg:w-[33%] rounded-md mb-3 mx-2 overflow-y-auto flex flex-col items-center'>
+                                <h1 className='text-[25px] font-bold text-submiButton mt-3'>Validated Requests ...</h1>
+                                <div className='w-[95%] h-auto px-2 border-[2px] bg-green-100 border-submiButton  rounded-md mt-2 flex flex-col '>
+                                    <div className='w-full h-auto py-2 flex flex-row justify-between'>
+                                        <h1 className='font-bold'>Content</h1>
+                                        <NavLink to="/student/requests/associatedRental">
+                                            <FontAwesomeIcon icon={faArrowRight} className=' cursor-pointer' title='see associated Rental post' />
+                                        </NavLink>
+                                        
 
+                                    </div>
+                                    <div className='w-full p-3'>
+                                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti nostrum, culpa reprehenderit dolore doloremque labore cum laboriosam repellat aliquid ipsam explicabo velit eligendi officiis dolorum nisi impedit ab voluptatem ullam?</p>
+
+                                    </div>
+                                </div>
+                               
 
                             </div>
                         </div>

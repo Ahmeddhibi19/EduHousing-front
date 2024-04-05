@@ -84,7 +84,7 @@ const Register = () => {
                             <FontAwesomeIcon icon={faUser}  />
                         </div>
                             <input 
-                            type={pass ? 'text' : 'password'}
+                            type='text'
                             className='w-[100px] sm:w-full md:w-[150px] lg:w-[150px] border-[1px] border-gray-500  pl-3 mb-[50px] focus:outline-none focus:border-green-500'
                             placeholder='First  Name'
                             required
@@ -98,7 +98,7 @@ const Register = () => {
                             <FontAwesomeIcon icon={faUser}  />
                         </div>
                             <input 
-                            type={pass ? 'text' : 'password'}
+                            type='text'
                             className='w-[100px] sm:w-full md:w-[150px] lg:w-[150px] border-[1px] border-gray-500  pl-3 mb-[50px] focus:outline-none focus:border-green-500'
                             placeholder='Last Name'
                             required
