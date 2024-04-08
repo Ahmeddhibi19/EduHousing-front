@@ -5,7 +5,7 @@ import { faLock, faLocationDot, faUser, faPhone } from '@fortawesome/free-solid-
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import ServerResponse from '../../ServerResponse';
 
-const UpdateDetails = () => {
+const UpdateDetailsHomeowner = () => {
 
   const [overlay, setOverlay] = useState(false);
   const handleSubmit=(event)=>{
@@ -60,4 +60,4 @@ const UpdateDetails = () => {
   )
 }
 
-export default UpdateDetails
+export default UpdateDetailsHomeowner

@@ -134,30 +134,10 @@ const NavHomeowner = (props) => {
               </li>
 
 
-              <li className={`flex flex-row items-center ml-6 mb-3 pl-2 py-2 text-gray-600 hover:bg-submiButton hover:rounded-md cursor-pointer hover:text-white ${menuActiveItem === 3 ? '  bg-submiButton rounded-md  mr-1' : ''}`}
-                onClick={() => handleMenuClick(3)}>
-                <NavLink to={props.favourites} onClick={() => setMenu(false)} className="flex flex-row items-center">
-                  <FontAwesomeIcon icon={faStar} className={` ${menuActiveItem === 3 ? ' text-white   ' : ''}`} />
-                  <p className={` ml-4 ${menuActiveItem === 3 ? ' text-white   ' : ''}`}>Favourites</p>
-                </NavLink>
-
-              </li>
-              <li className={`flex flex-row items-center ml-6 mb-3 pl-2 py-2 text-gray-600 hover:bg-submiButton hover:rounded-md cursor-pointer hover:text-white ${menuActiveItem === 4 ? '  bg-submiButton rounded-md  mr-1' : ''}`}
-                onClick={() => handleMenuClick(4)}>
-                <NavLink to={props.rentalHistory} onClick={() => setMenu(false)} className="flex flex-row items-center">
-                  <FontAwesomeIcon icon={faHistory} className={` ${menuActiveItem === 4 ? ' text-white   ' : ''}`} />
-                  <p className={` ml-4 ${menuActiveItem === 4 ? ' text-white   ' : ''}`}>Rental History</p>
-                </NavLink>
-
-              </li>
-              <li className={`flex flex-row items-center ml-6 mb-3 pl-2 py-2 text-gray-600 hover:bg-submiButton hover:rounded-md cursor-pointer hover:text-white ${menuActiveItem === 5 ? '  bg-submiButton rounded-md  mr-1' : ''}`}
-                onClick={() => handleMenuClick(5)}>
-                <NavLink to={props.requests} onClick={() => setMenu(false)} className="flex flex-row items-center">
-                  <FontAwesomeIcon icon={faCodePullRequest} className={` ${menuActiveItem === 5 ? ' text-white   ' : ''}`} />
-                  <p className={` ml-4 ${menuActiveItem === 5 ? ' text-white   ' : ''}`}>My Requests</p>
-                </NavLink>
-
-              </li>
+             
+              
+             
+              
               <li className={`flex flex-row items-center ml-6 mb-3 pl-2 py-2 text-gray-600 hover:bg-submiButton hover:rounded-md cursor-pointer hover:text-white ${menuActiveItem === 6 ? '  bg-submiButton rounded-md  mr-1' : ''}`}
                 onClick={() => handleMenuClick(6)}>
                 <NavLink to={props.settings} onClick={() => setMenu(false)} className="flex flex-row items-center">
@@ -205,33 +185,9 @@ const NavHomeowner = (props) => {
             </NavLink>
 
           </li>
-          <li className={`flex flex-row items-center ml-6 mb-6 pl-2 py-2 text-gray-600 hover:bg-submiButton hover:rounded-md cursor-pointer hover:text-white ${activeItem === 2 ? 'bg-submiButton rounded-md text-white' : ''}`}
-            onClick={() => handleItemClick(2)}
-          >
-            <NavLink to={props.favourites} className="flex flex-row items-center">
-              <FontAwesomeIcon icon={faStar} className={` ${activeItem === 2 ? ' text-white   ' : ''}`} />
-              <p className={` ml-4 ${activeItem === 2 ? ' text-white   ' : ''}`}>Favourites</p>
-            </NavLink>
+         
 
-          </li>
-          <li className={`flex flex-row items-center ml-6 mb-6 pl-2 py-2 text-gray-600 hover:bg-submiButton hover:rounded-md cursor-pointer hover:text-white ${activeItem === 3 ? 'bg-submiButton rounded-md text-white' : ''}`}
-            onClick={() => handleItemClick(3)}
-          >
-            <NavLink to={props.rentalHistory} className="flex flex-row items-center">
-              <FontAwesomeIcon icon={faHistory} className={` ${activeItem === 3 ? ' text-white   ' : ''}`} />
-              <p className={` ml-4 ${activeItem === 3 ? ' text-white   ' : ''}`}>Rental History</p>
-            </NavLink>
-
-          </li>
-          <li className={`flex flex-row items-center ml-6 mb-6 pl-2 py-2 text-gray-600 hover:bg-submiButton hover:rounded-md cursor-pointer hover:text-white ${activeItem === 4 ? 'bg-submiButton rounded-md text-white' : ''}`}
-            onClick={() => handleItemClick(4)}
-          >
-            <NavLink to={props.requests} className="flex flex-row items-center">
-              <FontAwesomeIcon icon={faCodePullRequest} className={` ${activeItem === 4 ? ' text-white   ' : ''}`} />
-              <p className={` ml-4 ${activeItem === 4 ? ' text-white   ' : ''}`}>My Requests</p>
-            </NavLink>
-
-          </li>
+     
           <li className={`flex flex-row items-center ml-6 mb-6 pl-2 py-2 text-gray-600 hover:bg-submiButton hover:rounded-md cursor-pointer hover:text-white ${activeItem === 5 ? 'bg-submiButton rounded-md text-white' : ''}`}
             onClick={() => handleItemClick(5)}
           >

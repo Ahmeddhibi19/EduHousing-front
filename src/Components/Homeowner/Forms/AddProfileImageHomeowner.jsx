@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ServerResponse from '../../ServerResponse';
 
-const AddProfileImage = () => {
+const AddProfileImageHomeowner = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
     const [overlay,setOverlay]=useState(false);
@@ -55,4 +55,4 @@ const AddProfileImage = () => {
   )
 }
 
-export default AddProfileImage
+export default AddProfileImageHomeowner

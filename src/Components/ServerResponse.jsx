@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Spinner from './Spinner';
 
-const ServerResponse = ({ onClose }) => {
+const ServerResponse = ({ onClose ,responseData }) => {
     const [loading, setLoading] = useState(true);
 
     const handleOk = () => {
@@ -20,7 +20,7 @@ const ServerResponse = ({ onClose }) => {
 
         <div className='fixed  w-full h-full inset-0 flex justify-center items-center z-50 bg-black bg-opacity-30'>
             {
-                loading ? (
+               responseData === null || responseData === '' ? (
                     <div className='w-[30%] sm:w-[30%] md:w-[30%] lg:w-[10%] bg-white p-6 rounded-md flex justify-center'>
                         <Spinner className='' />
                     </div>
@@ -29,10 +29,7 @@ const ServerResponse = ({ onClose }) => {
                 ) : (
                     <div className='w-[90%] sm:w-[90%] md:w-[90%] lg:w-[40%] bg-white p-6 rounded-md'>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                            Velit maxime, hic soluta illum minima animi nulla? Id
-                            totam beatae cum, laudantium consectetur praesentium quam
-                            facere, vero molestias est qui necessitatibus.
+                            {responseData}
                         </p>
                         <div className='flex justify-between mt-4'>
                             <button

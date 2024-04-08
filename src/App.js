@@ -36,6 +36,12 @@ import UpdateApartment from "./Components/Homeowner/UpdateApartment";
 import UpdateRental from "./Components/Homeowner/UpdateRental";
 import AddApartment from "./Components/Homeowner/AddApartment";
 import AddRental from "./Components/Homeowner/AddRental";
+import FeedbackList from "./Components/Homeowner/FeedbackList";
+import HomeownerSettings from "./Components/Homeowner/HomeownerSettings";
+import UpdateDetailsHomeowner from "./Components/Homeowner/Forms/UpdateDetailsHomeowner";
+import AddProfileImageHomeowner from "./Components/Homeowner/Forms/AddProfileImageHomeowner";
+import MessagesHomeowner from "./Components/Homeowner/MessagesHomeowner";
+import GetUser from "./Components/Auth/GetUser";
 
 
 
@@ -45,6 +51,13 @@ function App() {
 
   return (
     <div>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route path="/getStarted/:token" element={<GetUser/>}/>
+      </Routes>
+      </BrowserRouter>
 
       <BrowserRouter >
 
@@ -111,6 +124,10 @@ function App() {
                   <Route path="" element={<HomeownerDashboard />} >
                    <Route index path="" element={<UsersHomeowner />} />
                   </Route>
+                  <Route path="/users" element={<UsersHomeowner />} >
+                    <Route index path="" element={<MessagesHomeowner />} />
+                  </Route>
+                    
                   <Route path="/account" element={<HomeownerAccount />} />
                   <Route path="/rentalList/:id" element={<RelatedRentals/>}/>
                   <Route path="/requestList/:rental_id" element={<ListRequests/>}/>
@@ -118,6 +135,10 @@ function App() {
                   <Route path="/updateRental/:rental_id" element={<UpdateRental/>}/>
                   <Route path="/addApartment" element={<AddApartment/>}/>
                   <Route path="/addRental/:apartment_id" element={<AddRental/>} />
+                  <Route path="/comment/:id" element={<FeedbackList/>}/>
+                  <Route path="/settings" element={<HomeownerSettings/>}/>
+                  <Route path="/settings/updateDetails" element={<UpdateDetailsHomeowner/>}/>
+                  <Route path="/settings/addProfileImage" element={<AddProfileImageHomeowner/>}/>
                 </Routes>
 
               </>

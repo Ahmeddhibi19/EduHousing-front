@@ -7,7 +7,7 @@ import ServerResponse from '../ServerResponse';
 const ListRequests = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const {id}=useParams();
+  const {rental_id}=useParams();
   const [overlay, setOverlay] = useState(false);
   const handleOverlay = () => {
     setOverlay((prev) => !prev);
@@ -50,7 +50,7 @@ const handleRemoveAcceptance=()=>{
       ) : (
         <div className='w-full h-auto p-3 flex flex-col '>
           <div className='w-full flex justify-center my-4'>
-            <h1 className='text-[25px] font-bold text-gray-500'>Associated request list with rental post id : {id}</h1>
+            <h1 className='text-[25px] font-bold text-gray-500'>Associated request list with rental post id : {rental_id}</h1>
           </div>
           {
             requests.map((request,index)=>{
@@ -60,7 +60,7 @@ const handleRemoveAcceptance=()=>{
               return (
                 <div 
                   key={index} 
-                  className={`w-full h-auto flex flex-col lg:flex-row p-2 border-2 ${
+                  className={`w-full h-auto flex flex-col lg:flex-row p-2 border-2 shadow-md ${
                     request.STATUS === "PENDING" ? 'border-gray-500 bg-customGray' : 
                     (request.STATUS === "ACCEPTED" ? 'border-submiButton bg-green-50' : 'border-[#02D4DF] bg-blue-50')
                   } rounded-md mb-3`}

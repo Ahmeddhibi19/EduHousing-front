@@ -13,6 +13,8 @@ import '@splidejs/react-splide/css';
 import Spinner from '../Spinner';
 import ServerResponse from '../ServerResponse';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 
 const apartmentImage1 = require("../../Assets/DAB03919-10470989.webp");
 const apartmentImage2 = require("../../Assets/DAB03919-10470989.webp");
@@ -23,11 +25,12 @@ const images = [apartmentImage1, apartmentImage2, apartmentImage3];
 const HomeownerDashboard = () => {
 
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [overlay, setOverlay] = useState(false);
   const [inputfeedback, setInputfeedback] = useState(false);
   const[sortBy,setSortBy]=useState(null);
   const[maxDistance,setMaxDistance]=useState(null)
+
   const navigate = useNavigate();
   const handleSubmitAplicationfeedback = () => {
       setInputfeedback((e) => !e)
@@ -50,7 +53,31 @@ const HomeownerDashboard = () => {
   const handleRentalList=(id)=>{
     navigate(`/homeowner/rentallist/${id}`);
   }
+  const HandleFeedBackList=(id)=>{
+    navigate(`/homeowner/comment/${id}`);
+  }
+  const userId = localStorage.getItem('userId');
+  const accessToken = localStorage.getItem('accessToken');
 
+ useEffect(()=>{ 
+    axios.get(`http://localhost:8081/api/EduHousing/v1.0.0/apartment/homeowner/${userId}`,
+    {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+    }
+)
+    .then(resppnse=>{
+        console.log(resppnse.data)
+        setData(resppnse.data)
+        setLoading(false)
+ 
+    })
+    .catch((error)=>{
+        console.log(error);
+    })
+
+ },[])
 
 
   return (
@@ -104,7 +131,7 @@ const HomeownerDashboard = () => {
                                   <p className='text-[20px] mt-3'>Apartment type : <span className='text-[#EE3824] font-bold'>Studio</span></p>
                               </div>
                               <div className='w-full flex flex-row justify-between py-3'>
-                                <NavLink to='/homeowner/comment' className='bg-[#02D4DF] w-[80px] px-2 text-white rounded-md font-bold flex justify-center items-center' > <FontAwesomeIcon icon={faComment} title='check rental feedback'/></NavLink>
+                                <button onClick={()=>HandleFeedBackList(12245)} className='bg-[#02D4DF] w-[80px] px-2 text-white rounded-md font-bold flex justify-center items-center' > <FontAwesomeIcon icon={faComment} title='check rental feedback'/></button>
                                 <button className='bg-[#02D4DF] w-[80px] px-2 text-white rounded-md font-bold flex justify-center items-center' onClick={()=>handleUpdate(12445)}>update</button>
                     
                               </div>
