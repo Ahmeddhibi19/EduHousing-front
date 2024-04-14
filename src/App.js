@@ -42,6 +42,12 @@ import UpdateDetailsHomeowner from "./Components/Homeowner/Forms/UpdateDetailsHo
 import AddProfileImageHomeowner from "./Components/Homeowner/Forms/AddProfileImageHomeowner";
 import MessagesHomeowner from "./Components/Homeowner/MessagesHomeowner";
 import GetUser from "./Components/Auth/GetUser";
+import AdminNav from "./Components/Admin/AdminNav";
+import AdminDashboard from "./Components/Admin/AdminDashboard";
+import AllUsers from "./Components/Admin/AllUsers";
+import Colleges from "./Components/Admin/Colleges";
+import AddCollege from "./Components/Admin/AddCollege";
+import UpdateCollegeAdmin from "./Components/Admin/UpdateCollege";
 
 
 
@@ -149,6 +155,24 @@ function App() {
 
 
 
+      </BrowserRouter>
+      <BrowserRouter>
+      <Routes>
+        <Route 
+        path="/admin/*" 
+        element={
+          <>
+            <AdminNav/>
+            <Routes>
+                <Route path="" element={<AdminDashboard/>}/>
+                <Route path="/users" element={<AllUsers/>}/>
+                <Route path="/colleges" element={<Colleges/>}/>
+                <Route path="/colleges/add" element={<AddCollege/>}/>
+                <Route path="/colleges/update/:id" element={<UpdateCollegeAdmin/>}/>
+            </Routes>          
+            </>
+        }/>
+      </Routes>
       </BrowserRouter>
     </div>
 
