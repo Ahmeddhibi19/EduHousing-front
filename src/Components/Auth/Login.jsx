@@ -46,8 +46,8 @@ const Login = () => {
                 navigate("/student");
             } else if (decodedToken.role.some(role => role.authority === 'ROLE_HOMEOWNER')) {
                 navigate("/homeowner");
-            } else {
-                navigate("/"); // Default redirect
+            } else if(decodedToken.role.some(role => role.authority === 'ROLE_ADMIN')) {
+                navigate("/admin"); // Default redirect
             }
             
 

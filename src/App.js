@@ -48,6 +48,13 @@ import AllUsers from "./Components/Admin/AllUsers";
 import Colleges from "./Components/Admin/Colleges";
 import AddCollege from "./Components/Admin/AddCollege";
 import UpdateCollegeAdmin from "./Components/Admin/UpdateCollege";
+import City from "./Components/Admin/City";
+import AdminAccount from "./Components/Admin/AdminAccount";
+import AdminSettings from "./Components/Admin/AdminSettings";
+import AllApartments from "./Components/Admin/AllApartments";
+import AddCity from "./Components/Admin/AddCity";
+import UpdateCity from "./Components/Admin/UpdateCity";
+import AllRentalPosts from "./Components/Admin/AllRentalPosts";
 
 
 
@@ -162,13 +169,33 @@ function App() {
         path="/admin/*" 
         element={
           <>
-            <AdminNav/>
+            <AdminNav
+            addAdmin="/admin/add"
+            apartments="/admin/apartments"
+            rentalPosts="/admin/rental"
+            users="/admin/users"
+            feedbackList="admin/feedback"
+            settings="/admin/settings"
+            account="/admin/account"
+            requests="/admin/requests"
+            city="/admin/city"
+            home="/admin"
+            college="/admin/colleges"
+
+            />
             <Routes>
                 <Route path="" element={<AdminDashboard/>}/>
                 <Route path="/users" element={<AllUsers/>}/>
                 <Route path="/colleges" element={<Colleges/>}/>
                 <Route path="/colleges/add" element={<AddCollege/>}/>
                 <Route path="/colleges/update/:id" element={<UpdateCollegeAdmin/>}/>
+                <Route path="/city" element={<City/>}/>
+                <Route path="/account" element={<AdminAccount/>}/>
+                <Route path="/settings" element={<AdminSettings/>}/>
+                <Route path="/apartments" element={<AllApartments/>}/>
+                <Route path="/city/add" element={<AddCity/>}/>
+                <Route path="/city/update/:id" element={<UpdateCity/>}/>
+                <Route path="/apartments/total_rental_post/:id" element={<AllRentalPosts/>}/>
             </Routes>          
             </>
         }/>

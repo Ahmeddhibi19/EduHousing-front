@@ -16,7 +16,9 @@ import {
   faAddressCard,
   faUserGroup,
   faCirclePlus,
-  faScrewdriverWrench 
+  faScrewdriverWrench ,
+  faCity ,
+  faBuildingColumns 
 } from "@fortawesome/free-solid-svg-icons";
 import { faArrowAltCircleLeft, faArrowRightFromBracket } from '@fortawesome/free-regular-svg-icons';
 import { Link, NavLink } from "react-router-dom";
@@ -201,18 +203,36 @@ const AdminNav = (props) => {
         <li className={`flex flex-row items-center ml-6 mb-6 pl-2 py-2 text-gray-600 hover:bg-orange-700  cursor-pointer hover:text-white ${activeItem === 6 ? 'bg-orange-700  text-white' : ''}`}
           onClick={() => handleItemClick(6)}
         >
-          <NavLink to={props.help} className="flex flex-row items-center">
-            <FontAwesomeIcon icon={faCirclePlus} className={` ${activeItem === 6 ? ' text-white   ' : ''}`} />
-            <p className={` ml-4 ${activeItem === 6 ? ' text-white   ' : ''}`}>Add City </p>
+          <NavLink to={props.city} className="flex flex-row items-center">
+            <FontAwesomeIcon icon={faCity } className={` ${activeItem === 6 ? ' text-white   ' : ''}`} />
+            <p className={` ml-4 ${activeItem === 6 ? ' text-white   ' : ''}`}>Cities </p>
           </NavLink>
 
         </li>
         <li className={`flex flex-row items-center ml-6 mb-6 pl-2 py-2 text-gray-600 hover:bg-orange-700  cursor-pointer hover:text-white ${activeItem === 7 ? 'bg-orange-700  text-white' : ''}`}
           onClick={() => handleItemClick(7)}
         >
-          <NavLink to={props.aboutUs} className="flex flex-row items-center">
-            <FontAwesomeIcon icon={faCirclePlus} className={` ${activeItem === 7 ? ' text-white   ' : ''}`} />
-            <p className={` ml-4 ${activeItem === 7 ? ' text-white   ' : ''}`}>Add College </p>
+          <NavLink to={props.users} className="flex flex-row items-center">
+            <FontAwesomeIcon icon={faUser} className={` ${activeItem === 7 ? ' text-white   ' : ''}`} />
+            <p className={` ml-4 ${activeItem === 7 ? ' text-white   ' : ''}`}>users </p>
+          </NavLink>
+
+        </li>
+        <li className={`flex flex-row items-center ml-6 mb-6 pl-2 py-2 text-gray-600 hover:bg-orange-700  cursor-pointer hover:text-white ${activeItem === 8 ? 'bg-orange-700  text-white' : ''}`}
+          onClick={() => handleItemClick(8)}
+        >
+          <NavLink to={props.college} className="flex flex-row items-center">
+            <FontAwesomeIcon icon={faBuildingColumns } className={` ${activeItem === 8 ? ' text-white   ' : ''}`} />
+            <p className={` ml-4 ${activeItem === 8 ? ' text-white   ' : ''}`}>Colleges </p>
+          </NavLink>
+
+        </li>
+        <li className={`flex flex-row items-center ml-6 mb-6 pl-2 py-2 text-gray-600 hover:bg-orange-700  cursor-pointer hover:text-white ${activeItem === 9 ? 'bg-orange-700  text-white' : ''}`}
+          onClick={() => handleItemClick(9)}
+        >
+          <NavLink to={props.apartments} className="flex flex-row items-center">
+            <FontAwesomeIcon icon={faHouse} className={` ${activeItem === 9 ? ' text-white   ' : ''}`} />
+            <p className={` ml-4 ${activeItem === 9 ? ' text-white   ' : ''}`}>apartments </p>
           </NavLink>
 
         </li>

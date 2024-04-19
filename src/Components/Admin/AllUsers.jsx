@@ -1,17 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import ServerResponse from '../ServerResponse';
 
 const AllUsers = () => {
-  // Sample data for demonstration
-  const users = [
-    { id: 1, fullName: 'John Doe', email: 'john@example.com', role: 'Admin' },
-    { id: 2, fullName: 'Jane Smith', email: 'jane@example.com', role: 'User' },
-    { id: 3, fullName: 'Alice Johnson', email: 'alice@example.com', role: 'User' },
-    // Add more users as needed
-  ];
+  const [admin, setAdmin] = useState([]);
+  const [student, setStudent] = useState([]);
+  const [homeowner, setHomeowner] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
+  const [overlay, setOverlay] = useState(false);
+  const [responseData, setResponseData] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const accessToken = localStorage.getItem('accessToken');
+      try {
+        const adminsResponse = await axios.get('http://localhost:8081/api/EduHousing/v1.0.0/admin/authorized/all', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        const studentsResponse = await axios.get('http://localhost:8081/api/EduHousing/v1.0.0/student/admin/all', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        const homeownersResponse = await axios.get('http://localhost:8081/api/EduHousing/v1.0.0/homeowner/admin/all', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+
+        setAdmin(adminsResponse.data);
+        setStudent(studentsResponse.data);
+        setHomeowner(homeownersResponse.data);
+
+        // Set all users after fetching data from all endpoints
+        setAllUsers([...adminsResponse.data, ...studentsResponse.data, ...homeownersResponse.data]);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle error
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleDeleteUser = (userId) => {
+    const accessToken = localStorage.getItem('accessToken');
+    try{
+      axios.delete(`http://localhost:8081/api/EduHousing/v1.0.0/user/admin/delete_by_id/${userId}`,{
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }).then(res=>{
+        setResponseData(res.data)
+        console.log(res.data)
+      })
+
+    }catch(error){}
     // Implement delete user functionality here
     console.log(`Deleting user with ID: ${userId}`);
+    setOverlay(true);
   };
 
   return (
@@ -39,10 +88,10 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody className='bg-white divide-y divide-gray-200'>
-            {users.map((user) => (
+            {allUsers.map((user) => (
               <tr key={user.id}>
                 <td className='px-6 py-4 whitespace-nowrap'>{user.id}</td>
-                <td className='px-6 py-4 whitespace-nowrap'>{user.fullName}</td>
+                <td className='px-6 py-4 whitespace-nowrap'>{user.firstName + ' ' + user.lastName}</td>
                 <td className='px-6 py-4 whitespace-nowrap'>{user.email}</td>
                 <td className='px-6 py-4 whitespace-nowrap'>{user.role}</td>
                 <td className='px-6 py-4 whitespace-nowrap'>
@@ -58,6 +107,7 @@ const AllUsers = () => {
           </tbody>
         </table>
       </div>
+      {overlay ? <ServerResponse onClose={() => setOverlay(false)} responseData={responseData} /> : null}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect, } from 'react';
 import { Splide, SplideSlide } from '@splidejs/react-splide'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink, Outlet,useNavigate } from 'react-router-dom';
+import imageType from 'image-type';
 import {
     faPaperPlane,
     faUserGroup,
@@ -30,6 +31,7 @@ const HomeownerDashboard = () => {
   const [inputfeedback, setInputfeedback] = useState(false);
   const[sortBy,setSortBy]=useState(null);
   const[maxDistance,setMaxDistance]=useState(null)
+  const [apartments,setApartments]=useState([]);
 
   const navigate = useNavigate();
   const handleSubmitAplicationfeedback = () => {
@@ -68,8 +70,8 @@ const HomeownerDashboard = () => {
     }
 )
     .then(resppnse=>{
-        console.log(resppnse.data)
-        setData(resppnse.data)
+        setApartments(resppnse.data)
+       
         setLoading(false)
  
     })
@@ -97,25 +99,22 @@ const HomeownerDashboard = () => {
                             
                         </div>
                       <h1 className='text-[40px] my-5 font-bold  text-gray-500 ml-2'  >Your apartments list :</h1>
-                          <div className=' w-full h-auto p-4 flex flex-col border-[1px] border-b-gray-600 bg-customGray' >
+                      {
+                        apartments.map((apartment)=>{
+                            return(
+                                <div key={apartment.id} className=' w-full h-auto p-4 flex flex-col border-[1px] border-b-gray-600 bg-customGray' >
                             <div className='w-full h-auto flex justify-end p-2'>
                                 <FontAwesomeIcon icon={faCircleMinus} className='text-[25px] text-red-600 cursor-pointer' title='remove' onClick={()=>handleOverlay()}/>
                             </div>
                               <div className=' w-full  py-2 px-2 bg-customGray'>
                                   <Splide options={{ perPage: 1, gap: "0.7rem", drag: 'free' }}>
-                                      {
-                                          images.map((item) => {
-                                              return (
-                                                  <SplideSlide key={item.id}>
-                                                      <div className='rounded-3xl  my-7 bg-customGray'>
-
-                                                          <img src={item} alt={item.title} className='h-[200px] w-full object-cover  cursor-pointer hover:scale-105 ease-out duration-300' />
-                                                      </div>
-                                                  </SplideSlide>
-
-                                              )
-                                          })
-                                      }
+                                  {apartment.imageList.map((imageData, index) => (
+                      <SplideSlide key={index}>
+                        <div className='rounded-3xl  my-7 bg-customGray'>
+                          <img src={`data:image/${getImageType(imageData)};base64,${imageData}`} alt={`Apartment ${index + 1}`} className='h-[200px] w-full object-cover  cursor-pointer hover:scale-105 ease-out duration-300' />
+                        </div>
+                      </SplideSlide>
+                    ))}
                                   </Splide>
                               </div>
                               <div className='w-full flex flex-col'>
@@ -123,12 +122,12 @@ const HomeownerDashboard = () => {
                                       <p className='font-bold mb-3'>Description</p>
                                       <button className='bg-submiButton flex items-center px-2 text-white font-bold rounded-md hover:bg-[#02D4DF]' onClick={()=>handleRentalList(12345)}>see associated Rental posts</button>
                                   </div>
-                                  <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis quisquam dignissimos doloremque ad vero fugiat praesentium a placeat. Autem odit quod numquam saepe nobis recusandae esse impedit itaque ipsam temporibus!</p>
+                                  <p> {apartment.description}</p>
                               </div>
                               <div className='w-full flex flex-col justify-between py-7'>
-                              <p className='text-[20px] mt-3'>Address : <span className='text-[#EE3824] font-bold'>Tunis</span></p>
-                                  <p className='text-[20px] mt-3'>Apartment rating : <span className='text-[#EE3824] font-bold'>4.3</span></p>
-                                  <p className='text-[20px] mt-3'>Apartment type : <span className='text-[#EE3824] font-bold'>Studio</span></p>
+                              <p className='text-[20px] mt-3'>Address : <span className='text-[#EE3824] font-bold'>{apartment.address}</span></p>
+                                  <p className='text-[20px] mt-3'>Apartment rating : <span className='text-[#EE3824] font-bold'>{apartment.rating}</span></p>
+                                  <p className='text-[20px] mt-3'>Apartment type : <span className='text-[#EE3824] font-bold'>{apartment.type}</span></p>
                               </div>
                               <div className='w-full flex flex-row justify-between py-3'>
                                 <button onClick={()=>HandleFeedBackList(12245)} className='bg-[#02D4DF] w-[80px] px-2 text-white rounded-md font-bold flex justify-center items-center' > <FontAwesomeIcon icon={faComment} title='check rental feedback'/></button>
@@ -136,6 +135,10 @@ const HomeownerDashboard = () => {
                     
                               </div>
                           </div>
+                            )
+                        })
+                      }
+                     
 
 
                       </div>
@@ -161,5 +164,14 @@ const HomeownerDashboard = () => {
       </div>
   )
 }
+function getImageType(base64String) {
+    // This function extracts the MIME type from the base64 string
+    const mimeType = base64String.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
+    if (mimeType && mimeType.length) {
+       return mimeType[1].split('/')[1]; // Extract the image extension from the MIME type
+    } else {
+       return 'jpeg'; // Default to JPEG if the type cannot be determined
+    }
+   }
 
 export default HomeownerDashboard

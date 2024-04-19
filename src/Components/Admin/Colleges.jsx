@@ -1,9 +1,66 @@
-import React from 'react';
+import React ,{useState,useEffect} from 'react';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
+import ServerResponse from '../ServerResponse';
 const Colleges = () => {
+
+  const [colleges, setColleges] = useState([]);
+  const [overlay, setOverlay] = useState(false);
+  const [responseData, setResponseData] = useState('');
+
+  useEffect(() => {
+    // Function to fetch data when component mounts
+    const fetchData = async () => {
+      const accessToken = localStorage.getItem('accessToken');
+      try {
+        // Make a GET request to fetch cities data
+        const response = await axios.get('http://localhost:8081/api/EduHousing/v1.0.0/college/findAll',{
+          headers:{
+            Authorization: `Bearer ${accessToken}`
+          }
+        });
+        // Set the fetched data to state
+        setColleges(response.data);
+      } catch (error) {
+        // Handle error
+        console.error('Error fetching data:', error);
+        // You can display an error message to the user
+      }
+    };
+
+    // Call the fetchData function when component mounts
+    fetchData();
+
+    // Clean up function (optional)
+    // If you need to do any cleanup (like canceling timers or clearing intervals) when the component is unmounted, you can define a cleanup function inside useEffect.
+    return () => {
+      // Cleanup logic here
+    };
+  }, []); 
+
+
+
+  const handleDelete=(id)=>{
+    const accessToken = localStorage.getItem('accessToken');
+    axios.delete(`http://localhost:8081/api/EduHousing/v1.0.0/college/admin/delete_by_id/${id}`,{
+      headers:{
+        Authorization: `Bearer ${accessToken}`
+      }
+    })
+    .then((response)=>{
+       setResponseData(response.data);
+       console.log('city deleted successfully')
+ })
+    .catch((error)=>{
+      setResponseData('somthing went wrong')
+      console.log(error);
+    })
+    setOverlay((e)=>!e)
+  }
+
+
   // Sample data for demonstration
-  const colleges = [
+  const colleges2 = [
     { id: 1, name: 'University of Example', city: 'Example City', address: '123 Example St', latitude: 123.456, longitude: -78.901 },
     { id: 2, name: 'College of Sample', city: 'Sampletown', address: '456 Sample Ave', latitude: 12.345, longitude: -67.890 },
     // Add more colleges as needed
@@ -71,7 +128,7 @@ const Colleges = () => {
                     Update
                   </Link>
                   <button
-                    onClick={() => handleDeleteCollege(college.id)}
+                    onClick={() => handleDelete(college.id)}
                     className='text-red-500 hover:text-red-700 font-medium focus:outline-none'
                   >
                     Delete
@@ -82,6 +139,7 @@ const Colleges = () => {
           </tbody>
         </table>
       </div>
+      {overlay ? <ServerResponse onClose={() => setOverlay(false)} responseData={responseData} /> : null}
     </div>
   );
 };
