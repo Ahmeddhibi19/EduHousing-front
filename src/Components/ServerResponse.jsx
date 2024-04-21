@@ -27,10 +27,13 @@ const ServerResponse = ({ onClose ,responseData }) => {
 
 
                 ) : (
-                    <div className='w-[90%] sm:w-[90%] md:w-[90%] lg:w-[40%] bg-white p-6 rounded-md'>
-                        <p>
+                    <div className='w-[90%] sm:w-[90%] md:w-[90%] lg:w-[40%] bg-white p-6 rounded-md '>
+                        <div className='w-full font-bold flex flex-col justify-center text-center'>
+                        <p >
                             {responseData}
                         </p>
+                        </div>
+                        
                         <div className='flex justify-between mt-4'>
                             <button
                                 className='px-4 py-2 bg-red-600 text-white rounded-md mr-2'

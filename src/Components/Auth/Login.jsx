@@ -71,7 +71,7 @@ const Login = () => {
 
         </div>
         <div className='relative w-screen h-screen bg-white sm:w-screen sm:h-screen md:w-screen md:h-screen lg:w-[300px] lg:h-[500px]  rounded-tr-lg rounded-br-lg'>
-            <img src={loginImage} alt="" className='absolute inset-0 visible w-full h-full object-cover rounded-tl-lg rounded-bl-lg sm:visible md:visible lg:hidden filter blur-sm' />
+            <img src={loginImage} alt="" className='absolute inset-0 visible w-screen h-screen object-cover rounded-tl-lg rounded-bl-lg sm:visible md:visible lg:hidden filter blur-sm' />
             <div 
             className=' absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-25  '
             >

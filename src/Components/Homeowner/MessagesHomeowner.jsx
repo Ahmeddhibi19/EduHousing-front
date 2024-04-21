@@ -73,7 +73,7 @@ const MessagesHomeowner = (props) => {
                         return (
                             <div
                                 key={message.id}
-                                className="w-fit max-w-[70%] h-auto bg-[#40aabd] rounded-3xl mt-10 p-5 text-white ml-auto mr-5 sm:mr-5 md:mr-5 lg:mr-16"
+                                className="w-fit max-w-[70%] h-auto bg-[#40aabd] rounded-3xl mt-10 p-5 text-white ml-auto mr-5 sm:mr-5 md:mr-5 lg:mr-5"
                                 style={{
                                     height: 'auto',
                                     display: 'flex',

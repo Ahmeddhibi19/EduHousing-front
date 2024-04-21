@@ -1,13 +1,19 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import ServerResponse from '../ServerResponse';
 
 const AddRental = () => {
+  const accessToken = localStorage.getItem('accessToken');
   const [rentalData, setRentalData] = useState({
     startDate: '',
     endDate: '',
     monthlyAmount: '',
     description: '',
   });
-
+  const [responseData, setResponseData] = useState('');
+  const [overlay, setOverlay] = useState(false);
+ const  {apartment_id} = useParams()
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setRentalData({ ...rentalData, [name]: value });
@@ -15,14 +21,26 @@ const AddRental = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios.post(`http://localhost:8081/api/EduHousing/v1.0.0/rentalDetails/homeowner/create/${apartment_id}`,rentalData,{
+      headers:{
+        Authorization: `Bearer ${accessToken}`
+      }
+    }).then(res=>{
+      setResponseData("apartment saved successfully")
+      console.log(res.data)
+    }).catch(err=>{
+      console.log(err)
+      setResponseData(err.response.data.message+" : "+err.response.data.errors)
+    })
     // Handle form submission, e.g., send data to backend
+    setOverlay(true)
     console.log(rentalData);
   };
 
   return (
     <div className="w-full sm:w-full md:w-full lg:w-[80%] h-auto sm:ml-2 lg:ml-[20%] mt-[63px] px-3">
       <div className="w-full flex justify-center items-center my-20">
-        <h1 className="text-[25px] font-bold text-gray-500">Add Rental Post</h1>
+        <h1 className="text-[25px] font-bold text-gray-500">Add Rental Post to the apartment with id : {apartment_id}</h1>
       </div>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
@@ -91,6 +109,7 @@ const AddRental = () => {
           Add Rental Post
         </button>
       </form>
+      {overlay ? <ServerResponse onClose={() => setOverlay(false)} responseData={responseData} /> : null}
     </div>
   );
 };

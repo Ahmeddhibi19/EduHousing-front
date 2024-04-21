@@ -5,20 +5,24 @@ import axios from 'axios';
     const UpdateApartment = () => {
       const { id } = useParams();
       const [apartmentData, setApartmentData] = useState({
-          existingImages: [],
-          newImages: [],
-          description: '',
-          type: '',
-          address: '',
-          // Add other apartment details
+        imageList: [], // Initialize imageList as an empty array
+        newImages: [], // Initialize newImages as an empty array
+        address: '', // Initialize other attributes with default values if needed
+        description: '',
+        type: '',
       });
-
+      const accessToken = localStorage.getItem('accessToken');
       useEffect(() => {
         // Fetch apartment data from the server based on ID
-        axios.get(`your_api_endpoint/${id}`)
+        axios.get(`http://localhost:8081/api/EduHousing/v1.0.0/apartment/${id}`,{
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
             .then(response => {
                 // Set the fetched apartment data
                 setApartmentData(response.data);
+                setApartmentData({...apartmentData,imageList:response.data.images})
             })
             .catch(error => {
                 // Handle error
@@ -28,8 +32,11 @@ import axios from 'axios';
 
     const handleDeleteExistingImage = (index) => {
       // Implement delete request to server for existing image
-      const imageToDelete = apartmentData.existingImages[index];
-      axios.delete(`your_api_endpoint/${id}/images/${imageToDelete.id}`)
+      axios.delete(`http://localhost:8081/api/EduHousing/v1.0.0/apartmentImages/homeowner/delete_by_id/${index}`,{
+        headers:{
+            Authorization: `Bearer ${accessToken}`
+          }
+      })
           .then(response => {
               // Remove the image from the list if deletion is successful
               const updatedExistingImages = [...apartmentData.existingImages];
@@ -63,22 +70,33 @@ import axios from 'axios';
   };
 
   const handleSubmit = (e) => {
-      e.preventDefault();
+    e.preventDefault();
+    const newApartment={
+        id:id,
+        address:apartmentData.address,
+        description:apartmentData.description,
+        type:apartmentData.type,
+    }
+
+      axios.put(`http://localhost:8081/api/EduHousing/v1.0.0/apartment/homeowner/update`, newApartment, {
+  headers: {
+    Authorization: `Bearer ${accessToken}`
+  }
+})
       // Handle form submission to update apartment data
       // Send only new images to the server for saving
-      const formData = new FormData();
       apartmentData.newImages.forEach((image) => {
-          formData.append('images', image);
+        const formData = new FormData();
+        formData.append('file', image);
+        axios.post(`http://localhost:8081/api/EduHousing/v1.0.0/apartmentImages/homeowner/create/${id}`,formData,
+        {
+          headers: {
+              Authorization: `Bearer ${accessToken}`,
+              'Content-Type': 'multipart/form-data' 
+            }
+      }
+      ).then((response)=>{}).catch((error)=>{console.log(error);});
       });
-      axios.post(`your_api_endpoint/${id}/images`, formData)
-          .then(response => {
-              // Handle successful image upload
-              console.log('New images uploaded successfully:', response.data);
-          })
-          .catch(error => {
-              // Handle error
-              console.error('Error uploading new images:', error);
-          });
   };
 
 
@@ -90,10 +108,10 @@ import axios from 'axios';
             {/* Display apartment images with delete buttons */}
             <h1 className='text-gray-700 font-bold mb-2'>existing images</h1>
             <div className="flex flex-wrap overflow-x-auto">
-                {apartmentData.existingImages.map((image, index) => (
+                {apartmentData.imageList.map((imageData, index) => (
                     <div key={index} className="relative w-32/4 p-2">
-                        <img src={image.url} alt={`Existing Image ${index}`} className="w-32 h-32 object-cover" />
-                        <button className="absolute top-0 right-0 rounded-full bg-red-500 text-white p-1" onClick={() => handleDeleteExistingImage(index)}>X</button>
+                        <img src={`data:image/${getImageType(imageData.data)};base64,${imageData.data}`} alt={`Existing Image ${index}`} className="w-32 h-32 object-cover" />
+                        <button className="absolute top-0 right-0 rounded-full bg-red-500 text-white p-1" onClick={() => handleDeleteExistingImage(imageData.id)}>X</button>
                     </div>
                 ))}
             </div>
@@ -136,7 +154,7 @@ import axios from 'axios';
                 <input
                     type='text'
                     id='address'
-                    name='adress'
+                    name='address'
                     value={apartmentData.address}
                     placeholder='Enter new address'
                     onChange={handleInputChange}
@@ -183,5 +201,20 @@ import axios from 'axios';
         </div>
     );
 };
+function getImageType(base64String) {
+    // This function extracts the MIME type from the base64 string
+    const mimeType = base64String.match(/data:([a-zA-Z0-9]+\/[a-zA-Z0-9-.+]+).*,.*/);
+    if (mimeType && mimeType.length) {
+        const type = mimeType[1].split('/')[1]; // Extract the image extension from the MIME type
+        // Handle SVG images separately
+        if (type === 'svg+xml') {
+            return 'svg';
+        } else {
+            return type;
+        }
+    } else {
+        return 'jpeg'; // Default to JPEG if the type cannot be determined
+    }
+}
 
 export default UpdateApartment;
