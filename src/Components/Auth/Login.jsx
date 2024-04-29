@@ -43,10 +43,61 @@ const Login = () => {
              localStorage.setItem('userEmail',userEmail);
              localStorage.setItem('userId', userId);
              if (decodedToken.role.some(role => role.authority === 'ROLE_STUDENT')) {
-                navigate("/student");
+                const accessToken = localStorage.getItem('accessToken');
+                axios.get(`http://localhost:8081/api/EduHousing/v1.0.0/student/${userId}`,{
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }).then((res)=>{
+                localStorage.setItem("fullname",res.data.firstName+ " "+res.data.lastName);
+                localStorage.setItem("email",res.data.email)
+                localStorage.setItem("phoneNumber",res.data.phoneNumber)
+                axios.get(`http://localhost:8081/mongouser/${res.data.email}`,{
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }).then((res)=>{
+                    localStorage.setItem("mongoId",res.data)
+                })
+            }).catch((err)=>{
+                console.log(err);
+            })
+           
+            navigate("/student");
             } else if (decodedToken.role.some(role => role.authority === 'ROLE_HOMEOWNER')) {
-                navigate("/homeowner");
+                const accessToken = localStorage.getItem('accessToken');
+                axios.get(`http://localhost:8081/api/EduHousing/v1.0.0/homeowner/${userId}`,{
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }).then((res)=>{
+                localStorage.setItem("fullname",res.data.firstName+ " "+res.data.lastName);
+                localStorage.setItem("email",res.data.email)
+                localStorage.setItem("phoneNumber",res.data.phoneNumber)
+                axios.get(`http://localhost:8081/mongouser/${res.data.email}`,{
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }).then((res)=>{
+                    localStorage.setItem("mongoId",res.data)
+                })
+            }).catch((err)=>{
+                console.log(err);
+            })
+            navigate("/homeowner");
             } else if(decodedToken.role.some(role => role.authority === 'ROLE_ADMIN')) {
+                const accessToken = localStorage.getItem('accessToken');
+                axios.get(`http://localhost:8081/api/EduHousing/v1.0.0/admin/authorized/find_by_id/${userId}`,{
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }).then((res)=>{
+                localStorage.setItem("fullname",res.data.firstName+ " "+res.data.lastName);
+                localStorage.setItem("email",res.data.email)
+                localStorage.setItem("phoneNumber",res.data.phoneNumber)
+            }).catch((err)=>{
+                console.log(err);
+            })
                 navigate("/admin"); // Default redirect
             }
             

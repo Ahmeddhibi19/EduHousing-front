@@ -76,7 +76,7 @@ const RelatedRentals = () => {
                 ) : (
                     <div className='w-full flex flex-col '>
                         <div className='w- full h-auto flex flex-row items-center justify-between px-3'>
-                            <h1 className='text-[30px] w-[100%] my-5 font-bold  text-gray-500' >Rental posts you made to this apartment :</h1>
+                            <h1 className='text-[30px] w-[100%] my-5 font-bold  text-gray-500' >Rental posts you made to this apartment with id  <span className='text-red-600'>{id}</span>:</h1>
                             <div className='w-full h-[40px] flex flex-row items-center justify-end p-3'>
                                 <button onClick={() => handleAddRental(id)}><FontAwesomeIcon icon={faPlus} className='w-[60px] bg-submiButton h-[30px] text-white rounded-md cursor-pointer' title='add rental post' /></button>
 

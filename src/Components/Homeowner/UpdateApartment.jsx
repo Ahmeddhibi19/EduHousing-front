@@ -173,7 +173,7 @@ import axios from 'axios';
                         onChange={handleInputChange}
                         className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500'
                         placeholder='Enter description'
-                        required
+                        
                     />
                 </div>
                 <div className='mb-4'>
@@ -188,7 +188,7 @@ import axios from 'axios';
                         onChange={handleInputChange}
                         className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500'
                         placeholder='Enter type'
-                        required
+                        
                     />
                 </div>
                 <button

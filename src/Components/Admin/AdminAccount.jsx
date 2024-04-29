@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import profileImage from "../../Assets/DAB03919-10470989.webp";
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 const AdminAccount = () => {
 
@@ -44,6 +45,10 @@ const AdminAccount = () => {
           <p className="font-semibold mr-2">Role:</p>
           <p>Admin</p>
         </div>
+      </div>
+      <div className='w-full h-[70px] flex items-center justify-center'>
+        <NavLink to='/admin/account/addadminaccount' className='w-[180px] h-auto p-2 rounded-md shadow-lg shadow-black/40 bg-submiButton text-white'> + Add admin account</NavLink>
+
       </div>
     </div>
   );

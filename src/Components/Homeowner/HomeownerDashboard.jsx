@@ -119,7 +119,9 @@ const HomeownerDashboard = () => {
                                 apartments.map((apartment) => {
                                     return (
                                         <div key={apartment.id} className=' w-full h-auto p-4 flex flex-col border-[1px] border-b-gray-600 bg-customGray mb-7 shadow-xl shadow-gray-700 drop-shadow-lg' >
-                                            <div className='w-full h-auto flex justify-end p-2 '>
+                                            <div className='w-full h-auto flex justify-between p-2 '>
+                                            <p className='text-[20px] mt-3'>Id : <span className='text-[#EE3824] font-bold'>{apartment.id}</span></p>
+
                                                 <div className='w-[26px] h-[26px] text-[25px]  rounded-full bg-red-600 text-white flex items-center justify-center cursor-pointer' onClick={() => handleDelete(apartment.id)} title='remove' >X</div>
                                                 
                                             </div>

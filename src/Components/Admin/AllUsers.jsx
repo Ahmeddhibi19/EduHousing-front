@@ -8,6 +8,7 @@ const AllUsers = () => {
   const [homeowner, setHomeowner] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [overlay, setOverlay] = useState(false);
+  const [mongoId,setMongoId]=useState('');
   const [responseData, setResponseData] = useState('');
 
   useEffect(() => {
@@ -45,10 +46,17 @@ const AllUsers = () => {
     fetchData();
   }, []);
 
-  const handleDeleteUser = (userId) => {
+  const handleDeleteUser = (userId,email) => {
     const accessToken = localStorage.getItem('accessToken');
+    axios.get(`http://localhost:8081/mongouser/${email}`,{
+      headers: {
+          Authorization: `Bearer ${accessToken}`
+      }
+  }).then((res)=>{
+     setMongoId(res.data)
+  })
     try{
-      axios.delete(`http://localhost:8081/api/EduHousing/v1.0.0/user/admin/delete_by_id/${userId}`,{
+      axios.delete(`http://localhost:8081/api/EduHousing/v1.0.0/user/admin/delete_by_id/${userId}/${mongoId}`,{
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -96,7 +104,7 @@ const AllUsers = () => {
                 <td className='px-6 py-4 whitespace-nowrap'>{user.role}</td>
                 <td className='px-6 py-4 whitespace-nowrap'>
                   <button
-                    onClick={() => handleDeleteUser(user.id)}
+                    onClick={() => handleDeleteUser(user.id,user.email)}
                     className='text-red-500 hover:text-red-700 font-medium focus:outline-none'
                   >
                     Delete

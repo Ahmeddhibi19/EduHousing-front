@@ -55,6 +55,7 @@ import AllApartments from "./Components/Admin/AllApartments";
 import AddCity from "./Components/Admin/AddCity";
 import UpdateCity from "./Components/Admin/UpdateCity";
 import AllRentalPosts from "./Components/Admin/AllRentalPosts";
+import AddAdmin from "./Components/Admin/AddAdmin";
 
 
 
@@ -196,6 +197,7 @@ function App() {
                 <Route path="/city/add" element={<AddCity/>}/>
                 <Route path="/city/update/:id" element={<UpdateCity/>}/>
                 <Route path="/apartments/total_rental_post/:id" element={<AllRentalPosts/>}/>
+                <Route path="/account/addadminaccount" element={<AddAdmin/>}/>
             </Routes>          
             </>
         }/>

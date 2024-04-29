@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams,useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
+import axios from 'axios';
 
 const GetUser = () => {
     const {token}=useParams();
@@ -18,8 +19,46 @@ const GetUser = () => {
 
         // Redirect user based on role
         if (decodedToken.role.some(role => role.authority === 'ROLE_STUDENT')) {
+            
+            axios.get(`http://localhost:8081/api/EduHousing/v1.0.0/student/${userId}`,{
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }).then((res)=>{
+                localStorage.setItem("fullname",res.data.firstName+ " "+res.data.lastName);
+                localStorage.setItem("email",res.data.email)
+                localStorage.setItem("phoneNumber",res.data.phoneNumber)
+                axios.get(`http://localhost:8081/mongouser/${res.data.email}`,{
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }).then((res)=>{
+                    localStorage.setItem("mongoId",res.data)
+                })
+            }).catch((err)=>{
+                console.log(err);
+            })
+           
             navigate("/student");
         } else if (decodedToken.role.some(role => role.authority === 'ROLE_HOMEOWNER')) {
+            axios.get(`http://localhost:8081/api/EduHousing/v1.0.0/homeowner/${userId}`,{
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            }).then((res)=>{
+                localStorage.setItem("fullname",res.data.firstName+ " "+res.data.lastName);
+                localStorage.setItem("email",res.data.email)
+                localStorage.setItem("phoneNumber",res.data.phoneNumber)
+                axios.get(`http://localhost:8081/mongouser/${res.data.email}`,{
+                    headers: {
+                        Authorization: `Bearer ${accessToken}`
+                    }
+                }).then((res)=>{
+                    localStorage.setItem("mongoId",res.data)
+                })
+            }).catch((err)=>{
+                console.log(err);
+            })
             navigate("/homeowner");
         } else {
             navigate("/"); // Default redirect

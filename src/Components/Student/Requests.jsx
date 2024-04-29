@@ -102,8 +102,8 @@ const Requests = () => {
                                         )}
 
                                     </div>
-                                    <div className='w-full flex justify-end mr-5 my-3'>
-
+                                    <div className='w-full flex justify-between mr-5 my-3'>
+                                        <p className='font-bold '>rental post id : <span className='text-black'>5</span></p>
                                         <NavLink to="/student/requests/associatedRental">
                                             <FontAwesomeIcon icon={faArrowRight} className=' cursor-pointer' title='see associated Rental post' />
                                         </NavLink>
@@ -119,6 +119,7 @@ const Requests = () => {
                                 <div className='w-[95%] h-auto px-2 border-[2px] bg-blue-100 border-[#02D4DF]  rounded-md mt-2 flex flex-col '>
                                     <div className='w-full h-auto py-2 flex flex-row justify-between'>
                                         <h1 className='font-bold'>Content</h1>
+                                        <p className='font-bold '>rental post id : <span className='text-red-600'>5</span></p>
                                         <NavLink to="/student/requests/associatedRental">
                                             <FontAwesomeIcon icon={faArrowRight} className=' cursor-pointer' title='see associated Rental post' />
                                         </NavLink>
@@ -137,6 +138,7 @@ const Requests = () => {
                                 <div className='w-[95%] h-auto px-2 border-[2px] bg-green-100 border-submiButton  rounded-md mt-2 flex flex-col '>
                                     <div className='w-full h-auto py-2 flex flex-row justify-between'>
                                         <h1 className='font-bold'>Content</h1>
+                                        <p className='font-bold '>rental post id : <span className='text-red-600'>5</span></p>
                                         <NavLink to="/student/requests/associatedRental">
                                             <FontAwesomeIcon icon={faArrowRight} className=' cursor-pointer' title='see associated Rental post' />
                                         </NavLink>

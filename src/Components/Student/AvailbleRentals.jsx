@@ -124,7 +124,7 @@ const AvailbleRentals = () => {
                                 </div>
                                 <div className='w-full flex flex-row justify-between py-3'>
                                     <p className='bg-[#02D4DF] w-auto px-2 text-white rounded-md font-bold'>$1500 / month</p>
-                                    <button className='w-auto px-6 bg-submiButton font-bold text-white rounded-md' title='make request'
+                                    <button className='w-auto px-6 bg-submiButton font-bold z-50 text-white rounded-md' title='make request'
                                         onClick={() => handleSubmitAplicationfeedback()}>
                                         <FontAwesomeIcon icon={faPaperPlane} />
                                     </button>

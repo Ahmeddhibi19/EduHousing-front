@@ -1,5 +1,9 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
+
+
 import {
     faBars,
     faHouse,
@@ -17,12 +21,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, NavLink } from "react-router-dom";
 import { messagesList } from "./MessageList";
+import axios from "axios";
 const profileImage = require("../../Assets/DAB03919-10470989.webp");
 
 const MessagesHomeowner = (props) => {
     const [inputValue, setInputValue] = useState('');
     const [inputHeight, setInputHeight] = useState('auto');
-    const [newMessageList, setNewMessageList] = useState(props.messagesList)
+    const [newMessageList, setNewMessageList] = useState([]);
+    const [messages,setMessages]=useState([]);
+    const senderId=props.senderId;
+    const recipientId=props.receiverId;
 
     const handleInputChange = (e) => {
         setInputValue(e.target.value);
@@ -36,20 +44,44 @@ const MessagesHomeowner = (props) => {
     //var newMessageList=[...props.messagesList];
     const handleSend = () => {
         if (inputValue) {
-            setNewMessageList(prevMessages => [
-                ...prevMessages,
-                {
-                    id: prevMessages.length + 1,
-                    senderId: 1,
-                    receiverId: 2,
-                    content: inputValue
-                }
-            ]);
+            const message = {
+                senderId: props.senderId,
+                recipientId: props.receiverId,
+                content: inputValue
+            };
+            stompClient.send("/app/chat", {}, JSON.stringify(message));
             setInputValue('');
-            setInputHeight('auto');
         }
-
     };
+
+    const [stompClient, setStompClient] = useState(null);
+    const accessToken = localStorage.getItem('accessToken');
+    useEffect(() => {
+        axios.get(`http://localhost:8081/messages/${senderId}/${recipientId}`,{
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }).then((res)=>{
+            setNewMessageList(res.data);
+        })
+        const socket = new SockJS("http://localhost:8081/ws");
+        const stompClient = Stomp.over(socket);
+    
+        stompClient.connect({}, () => {
+            setStompClient(stompClient);
+            stompClient.subscribe(`/user/${props.senderId}/queue/messages`, (response) => {
+                const payload = JSON.parse(response.body);
+                console.log("Received message:", payload);
+                setNewMessageList((prevMessages) => [...prevMessages, payload]);
+            });
+        });
+    
+        return () => {
+            if (stompClient) {
+                stompClient.disconnect();
+            }
+        };
+    }, [props.senderId]);
     return (
         <div className='w-full sm:w-screen md:w-screen lg:w-full h-full sm:h-full md:h-full lg:h-screen  overflow-y-auto mt-[50px] sm:mt-[50px] md:mt-[50px] lg:-mt-[8px] flex flex-col'>
             <div className='w-full h-[8%] bg-customGray mt-2 flex flex-row items-center justify-start px-4 sticky overflow-y-auto mb-4'>
@@ -65,7 +97,7 @@ const MessagesHomeowner = (props) => {
                     alt=""
                     className="w-[30px] h-[30px] rounded-full mx-6"
                 />
-                <p className=""> Ahmed Dhibi</p>
+                <p className=""> Ahmed Dhibi </p>
             </div>
             <div className="w-full  h-full  bg-white overflow-y-auto py-[200px] flex flex-col">
                 {newMessageList.map((message) => {
